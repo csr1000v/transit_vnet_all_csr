@@ -16,18 +16,18 @@ Microsoft Azure VNETs leverages Virtual Network (VNET) peering to establish comm
 
 Cisco Transit vNET solution on Azure uses a pair of CSR devices acting as DMVPN Hubs in active-active mode. The spoke VNETs also have a Cisco CSR1000v acting as DMVPN Spoke connecting to both Cisco Cloud Services Router 1000v Series devices through EIGRP or BGP as the overlay routing. The solution is does not require manual configuration and is automated. Once deployed, the solution automatically creates dynamic spoke-to-spoke IPsec tunnels in an on-demand fashion.
 
-See DMVPN Configuration Guide for more information.
+See DMVPN Configuration Guide for more information. [1]
 
-The benefits of this solution are as follows:
+<b>The benefits of this solution are as follows:</b>
 
-Higher IPsec throughput of Transit-VNET (two Cisco CSR1000v devices in Active-Active state)
-Connect multiple VNETs spanning globally, across regions, subscriptions, etc.
-Dynamic Spoke-to-Spoke IPsec tunnel reduces billing charges, as the traffic can now flow directly between one spoke VNET to another without having to traverse the Transit-Hub VNET
-Seamlessly connect to MultiCloud & Hybrid Cloud topologies with DMVPN as Overlay
-Support for up to 1000 IPsec tunnels
-Ability to handle Overlapping IP-Address space in Spoke VNETs
-End-to-End encryption is possible (From spoke-VNET to another spoke-VNET or to remote branch or on-premise locations)
-Enhances the cloud with Cisco IOS XE feature set that includes, QoS, ZBFW, NAT, AVC
+* Higher IPsec throughput of Transit-VNET (two Cisco CSR1000v devices in Active-Active state)
+* Connect multiple VNETs spanning globally, across regions, subscriptions, etc.
+* Dynamic Spoke-to-Spoke IPsec tunnel reduces billing charges, as the traffic can now flow directly between one spoke VNET to another without having to traverse the Transit-Hub VNET
+* Seamlessly connect to MultiCloud & Hybrid Cloud topologies with DMVPN as Overlay
+* Support for up to 1000 IPsec tunnels
+* Ability to handle Overlapping IP-Address space in Spoke VNETs
+* End-to-End encryption is possible (From spoke-VNET to another spoke-VNET or to remote branch or on-premise locations)
+* Enhances the cloud with Cisco IOS XE feature set that includes, QoS, ZBFW, NAT, AVC
 
 <b>Figure 1. DMVPN all-CSR based Transit VNET Supported on Azure</b>
 <img src="dmvpn_tvnet.jpg"/>
@@ -53,4 +53,14 @@ Enhances the cloud with Cisco IOS XE feature set that includes, QoS, ZBFW, NAT, 
 
 <h1>Documentation:</h1>
 
-https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/azu/b_csr1000config-azure/b_csr1000config-azure_chapter_01010.html
+<a href="https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/azu/b_csr1000config-azure/b_csr1000config-azure_chapter_01010.html" target="_blank">
+    [1]Transit VNET CSR1000v Cisco Guide
+</a>
+
+<a href="https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/azu/b_csr1000config-azure/b_csr1000config-azure_chapter_0100.html" target="_blank">
+    CSR1000v Deployment Guide
+</a>
+
+
+
+
