@@ -30,7 +30,7 @@ End-to-End encryption is possible (From spoke-VNET to another spoke-VNET or to r
 Enhances the cloud with Cisco IOS XE feature set that includes, QoS, ZBFW, NAT, AVC
 
 <b>Figure 1. DMVPN all-CSR based Transit VNET Supported on Azure</b>
-<img src="dmvpn_tvnet.png"/>
+<img src="dmvpn_tvnet.jpg"/>
 
 </p>
 
