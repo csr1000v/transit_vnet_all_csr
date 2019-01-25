@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworkName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "virtualNetworkAddressPrefix": {
+      "type": "string"
+    },
+    "Subnet1Name": {
+      "type": "string"
+    },
+    "Subnet1Prefix": {
+      "type": "string"
+    },
+    "Subnet2Name": {
+      "type": "string"
+    },
+    "Subnet2Prefix": {
+      "type": "string"
+    },
+    "vnetExistingRGName" : {
+      "type" : "string"
+    },
+    "routeTable1Name" : {
+      "type" : "string"
+    },
+    "routeTable2Name" : {
+      "type" : "string"
+    }
+  },
+  "variables": {
+    "vnetID" : "[resourceId(parameters('vnetExistingRGName'),'Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
+    "subnet1" : "[concat(variables('vnetID'),'/subnets/',parameters('Subnet1Name'))]",
+    "subnet2" : "[concat(variables('vnetID'),'/subnets/',parameters('Subnet2Name'))]",
+    "routeTable1Id" : "[resourceId('Microsoft.Network/routeTables',parameters('routeTable1Name'))]",
+    "routeTable2Id" : "[resourceId('Microsoft.Network/routeTables',parameters('routeTable2Name'))]"
+  },
+  "resources": [
+  ],
+  "outputs": {
+    "subnet1Ref": {
+      "value": "[variables('subnet1')]",
+      "type": "string"
+    },
+    "subnet2Ref": {
+      "value": "[variables('subnet2')]",
+      "type": "string"
+    }
+  }
+}

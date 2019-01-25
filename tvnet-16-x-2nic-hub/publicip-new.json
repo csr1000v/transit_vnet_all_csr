@@ -1,0 +1,76 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "publicIpAddressName": {
+      "type": "string"
+    },
+    "publicIp2AddressName": {
+      "type": "string"
+    },
+    "publicIPAddressType": {
+      "type": "string"
+    },
+    "dnsPrefix": {
+      "type": "string"
+    },
+    "dns2Prefix": {
+      "type": "string"
+    },
+    "publicIpRGName": {
+      "type": "string",
+      "defaultValue" : ""
+    },
+    "publicIPNewOrExisting" : {
+      "type" : "string",
+      "defaultValue" : ""
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2017-06-01",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('publicIpAddressName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "[parameters('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dnsPrefix')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-06-01",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('publicIp2AddressName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "[parameters('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dns2Prefix')]"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "publicIpId": {
+      "value": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIPAddressName'))]",
+      "type": "string"
+    },
+    "fqdn": {
+      "value": "[reference(parameters('publicIpAddressName')).dnsSettings.fqdn]",
+      "type": "string"
+    },
+    "publicIpId2": {
+      "value": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIP2AddressName'))]",
+      "type": "string"
+    },
+    "fqdn2": {
+      "value": "[reference(parameters('publicIp2AddressName')).dnsSettings.fqdn]",
+      "type": "string"
+    }
+  }
+}

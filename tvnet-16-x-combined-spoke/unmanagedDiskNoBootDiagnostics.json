@@ -1,0 +1,286 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "Deployment location"
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "sshPublicKey": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "SSH Key for the VM."
+      }
+    },
+    "authenticationType": {
+      "type": "string",
+      "defaultValue": "password",
+      "allowedValues": [
+        "password",
+        "sshPublicKey"
+      ],
+      "metadata": {
+        "description": "Authentication Type to chose for ssh into the VM."
+      }
+    },
+    "vmName": {
+      "type": "string",
+      "defaultValue": "CSR",
+      "metadata": {
+        "description": "Name for the Virtual Machine."
+      }
+    },
+    "customData": {
+    "type": "string",
+    "defaultValue": "echo customData",
+    "metadata": {
+      "description": "String passed down to the Virtual Machine."
+      }
+    },
+    "sku": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "SKU version"
+      }
+    },
+    "imageOffer": {
+      "type" : "string",
+      "defaultValue" : "cisco-csr-1000v",
+      "allowedValues" : [
+        "cisco-csr-1000v",
+        "cisco-csr-1000v-preview"
+      ]
+    },
+    "newStorageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Unique Name for Storage Account where the Virtual Machine's disks will be placed."
+      }
+    },
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Premium_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Premium_LRS"
+      ],
+      "metadata": {
+        "description": "The type of storage account created."
+      }
+    },
+    "storageAccountNewOrExisting": {
+      "type": "string",
+      "defaultValue": "new",
+      "allowedValues": [
+        "new",
+        "existing"
+      ],
+      "metadata": {
+        "description": "Identifies whether to use new or existing Storage Account"
+      }
+    },
+    "storageAccountExistingRG": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Resource Group containing existing storage account"
+      }
+    },
+    "availabilitySet": {
+      "type": "string",
+      "defaultValue": "Yes",
+      "metadata": {
+          "description": "Availability Set"
+      }
+    },
+    "availabilitySetName": {
+      "type": "string",
+      "defaultValue" : "defaultAvName",
+      "metadata": {
+          "description": "Availability Set Name"
+      }
+    },
+    "availabilitySetFaultDomainCount": {
+      "type": "string",
+      "defaultValue" : "2",
+      "metadata": {
+          "description": "Availability Set Fault domain count"
+      }
+    },
+    "availabilitySetUpdateDomainCount": {
+      "type": "string",
+      "defaultValue" : "20",
+      "metadata": {
+          "description": "Availability Set Update domain count"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "allowedValues": [
+        "Standard_D2_v2",
+        "Standard_D3_v2",
+        "Standard_D4_v2",
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2"
+      ],
+      "metadata": {
+        "description": "Size of the Virtual Machine."
+      }
+    },
+    "baseUrl": {
+      "type": "string",
+      "metadata": {
+        "artifactsBaseUrl": "",
+        "description": "URL to acquire other templates"
+      },
+      "defaultValue": ""
+    },
+    "numberOfNics":{
+      "type" : "int",
+      "minValue" : 2,
+      "maxValue" : 8,
+      "defaultValue" : 4,
+      "metadata" : {
+        "description" : "The number of Nics to associate with a VM"
+      }
+    }
+  },
+  "variables": {
+    "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
+    "osProfile": {              
+      "computername": "[parameters('vmName')]",
+      "adminUsername": "[parameters('adminUsername')]",
+      "adminPassword": "[if(equals(parameters('authenticationType'), 'password'), parameters('adminPassword'), json('null'))]",
+      "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]",
+      "customData": "[base64(parameters('customData'))]"
+    },
+    "linuxConfiguration": {
+      "disablePasswordAuthentication": "true",
+      "ssh": {
+        "publicKeys": [
+          {
+            "path": "[variables('sshKeyPath')]",
+            "keyData": "[parameters('sshPublicKey')]"
+          }
+        ]
+      }
+    },
+    "OSDiskName": "[concat(parameters('vmName'),'-disk')]",
+    "imagePublisher": "cisco",
+    "imageOffer": "[parameters('imageOffer')]",
+    "imageSKU": "[parameters('sku')]",
+    "storageAccountSetupURL": "[concat(parameters('baseUrl'),'/storageAccount-',parameters('storageAccountNewOrExisting'),'.json')]",
+    "availabilitySetID": {
+      "id": "[resourceId('Microsoft.Compute/availabilitySets',parameters('availabilitySetName'))]"
+    }
+  },
+  "resources": [
+    {
+      "name": "SettingUpStorageAccount",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2017-05-10",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('storageAccountSetupURL')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "storageAccountType": {
+            "value": "[parameters('storageAccountType')]"
+          },
+          "storageAccountName": {
+            "value": "[parameters('newStorageAccountName')]"
+          },
+          "storageAccountExistingRG": {
+            "value": "[parameters('storageAccountExistingRG')]"
+          }
+        }
+      }
+    },
+    {
+      "condition": "[equals(parameters('availabilitySet'), 'Yes')]",
+      "name": "[parameters('availabilitySetName')]",
+      "type": "Microsoft.Compute/availabilitySets",
+      "apiVersion": "2017-12-01",
+      "location": "[parameters('location')]",
+      "properties": {
+          "platformFaultDomainCount": "[parameters('availabilitySetFaultDomainCount')]",
+          "platformUpdateDomainCount": "[parameters('availabilitySetUpdateDomainCount')]"
+      }
+    },
+    {
+      "apiVersion": "2017-12-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('vmName')]",
+      "location": "[parameters('location')]",
+      "plan": {
+        "name": "[variables('imageSKU')]",
+        "publisher": "[variables('imagePublisher')]",
+        "product": "[variables('imageOffer')]"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/', 'SettingUpStorageAccount')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": "[variables('osProfile')]",
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('imagePublisher')]",
+            "offer": "[variables('imageOffer')]",
+            "sku": "[variables('imageSKU')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "[variables('OSDiskName')]",
+            "vhd": {
+              "uri": "[concat(reference('Microsoft.Resources/deployments/SettingUpStorageAccount', '2018-05-01').outputs.storageAccountId.value, 'vhds/osdisk', uniqueString(deployment().name), '.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "copy":[
+            {
+              "name" : "networkInterfaces",
+              "count" : "[parameters('numberOfNics')]",
+              "input" : {
+                "properties" : {
+                  "primary": "[if(equals(copyIndex('networkInterfaces'),0),'true', 'false')]"
+              },
+                "id" : "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmName'), '-Nic', copyIndex('networkInterfaces')))]"
+
+              }
+            }
+          ]
+      },
+        "availabilitySet": "[if(equals(parameters('availabilitySet'),'Yes'), variables('availabilitySetID'), json('null'))]"
+      }
+    }
+  ]
+}

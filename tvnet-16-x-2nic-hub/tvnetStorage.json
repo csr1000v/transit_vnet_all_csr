@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string"
+    },
+    "tvnetStorageName": {
+      "type": "string"
+    },
+    "tvnetStorageType" : {
+        "type" : "string"
+    },
+    "privateStorageName": {
+      "type": "string"
+    },
+    "privateTvnetStorageType" : {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+        "type": "Microsoft.Storage/storageAccounts",
+        "name": "[parameters('tvnetStorageName')]",
+        "apiVersion": "2018-07-01",
+        "location": "[parameters('location')]",
+        "sku": {
+            "name": "[parameters('tvnetStorageType')]"
+        },
+        "kind": "Storage", 
+        "properties": {
+        }
+    },
+    {
+        "type": "Microsoft.Storage/storageAccounts",
+        "name": "[parameters('privateStorageName')]",
+        "apiVersion": "2018-07-01",
+        "location": "[parameters('location')]",
+        "sku": {
+            "name": "[parameters('privateTvnetStorageType')]"
+        },
+        "kind": "Storage",
+        "properties": {
+        }
+    }
+  ],
+  "outputs": {
+    "tvnetStorageKey": {
+      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts/', parameters('tvnetStorageName')), '2018-07-01').keys[0].value]",
+      "type": "string"
+    },
+    "privateStorageKey": {
+      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts/', parameters('privateStorageName')), '2018-07-01').keys[0].value]",
+      "type": "string"
+    }
+  }
+}
