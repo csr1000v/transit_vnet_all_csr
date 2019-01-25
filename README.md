@@ -8,4 +8,9 @@
 </a>
 
 
+
+<a href="https://deploy.azure.com/?repository=https://github.com/csr1000v/transit_vnet_all_csr/tree/master/tvnet-16-x-2nic-hub" target="_blank">
+    <img src="http://armviz.io/visualizebutton.png"/>
+</a>
+
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
