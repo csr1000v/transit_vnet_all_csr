@@ -53,11 +53,11 @@ See DMVPN Configuration Guide for more information. [1]
 
 <h1>Documentation:</h1>
 
-<a href="https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/azu/b_csr1000config-azure/b_csr1000config-azure_chapter_01010.html" target="_blank">
+* <a href="https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/azu/b_csr1000config-azure/b_csr1000config-azure_chapter_01010.html" target="_blank">
     [1]Transit VNET CSR1000v Cisco Guide
 </a>
 
-<a href="https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/azu/b_csr1000config-azure/b_csr1000config-azure_chapter_0100.html" target="_blank">
+* <a href="https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/azu/b_csr1000config-azure/b_csr1000config-azure_chapter_0100.html" target="_blank">
     CSR1000v Deployment Guide
 </a>
 
