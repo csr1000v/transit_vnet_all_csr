@@ -42,8 +42,6 @@ Enhances the cloud with Cisco IOS XE feature set that includes, QoS, ZBFW, NAT, 
 </a>
 
 
-+++++++++++++++++++++++
-
 <h2>Transit VNET Combined Spoke templates</h2>
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcsr1000v%2Ftransit_vnet_all_csr%2Fmaster%2Ftvnet-16-x-combined-spoke%2FmainTemplate.json" target="_blank">
@@ -53,6 +51,6 @@ Enhances the cloud with Cisco IOS XE feature set that includes, QoS, ZBFW, NAT, 
 
 
 
-Documentation:
+<h1>Documentation:</h1>
 
 https://www.cisco.com/c/en/us/td/docs/routers/csr1000/software/azu/b_csr1000config-azure/b_csr1000config-azure_chapter_01010.html

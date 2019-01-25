@@ -8,6 +8,57 @@
                 "description": "Deployment location"
             }
         },
+        "vmName": {
+            "type": "string",
+            "defaultValue": "CSR",
+            "metadata": {
+                "description": "Name for the Virtual Machine."
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "metadata": {
+                "description": "Username for the Virtual Machine."
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Password for the Virtual Machine."
+            }
+        },
+        "sshPublicKey": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "SSH Key for the VM."
+            }
+        },
+        "authenticationType": {
+            "type": "string",
+            "defaultValue": "password",
+            "allowedValues": [
+                "password",
+                "sshPublicKey"
+            ],
+            "metadata": {
+                "description": "Authentication Type to chose for ssh into the VM."
+            }
+         },
+        "sku": {
+            "type" : "string",
+            "defaultValue": "16_9-byol",
+            "allowedValues": [
+                "16_9-byol",
+                "16_10-byol",
+                "16_10-payg-ax",
+                "16_10-payg-sec"
+            ],
+            "metadata": {
+                "description": "SKU version"
+            }
+        },
         "virtualNetworkName": {
             "type": "string",
             "defaultValue": "CSR_Network",
@@ -62,51 +113,6 @@
             "defaultValue": "sub2",
             "metadata": {
                 "description": "Subnet 2 Name"
-            }
-        },
-        "adminUsername": {
-            "type": "string",
-            "metadata": {
-                "description": "Username for the Virtual Machine."
-            }
-        },
-        "adminPassword": {
-            "type": "securestring",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Password for the Virtual Machine."
-            }
-        },
-        "sshPublicKey": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "SSH Key for the VM."
-            }
-        },
-        "authenticationType": {
-            "type": "string",
-            "defaultValue": "password",
-            "allowedValues": [
-                "password",
-                "sshPublicKey"
-            ],
-            "metadata": {
-                "description": "Authentication Type to chose for ssh into the VM."
-            }
-         },
-        "vmName": {
-            "type": "string",
-            "defaultValue": "CSR",
-            "metadata": {
-                "description": "Name for the Virtual Machine."
-            }
-        },
-        "sku": {
-            "type" : "string",
-            "defaultValue": "16_9-byol",
-            "metadata": {
-                "description": "SKU version"
             }
         },
         "managedDisk": {
