@@ -10,7 +10,7 @@
         },
         "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "CSR_Ne",
+            "defaultValue": "CSR_Network",
             "metadata": {
                 "description": "VNet name"
             }

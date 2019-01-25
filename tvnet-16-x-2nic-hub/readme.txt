@@ -1,7 +1,4 @@
 ###########################################################################################################################################################################
-2017-11-30
-version 1.0.0
-Cisco CSR 1000v - XE 16.x Deployment with 2 NICs
-
-
-<a href="https://azuredeploy.net/" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
+2019-01-25
+version 1.0.15
+TVNET HUB Cisco CSR 1000v - XE 16.x Deployment with 2 NICs
