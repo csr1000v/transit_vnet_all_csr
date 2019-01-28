@@ -242,7 +242,11 @@
     },
     "availabilitySet": {
       "type": "string",
-      "defaultValue": "",
+      "defaultValue": "Yes",
+      "allowedValues": [
+        "Yes",
+        "No"
+      ],
       "metadata": {
           "description": "Availability Set"
       }
