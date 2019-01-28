@@ -10,7 +10,7 @@
     },
     "vmName": {
       "type": "string",
-      "defaultValue": "CSR",
+      "defaultValue": "spoke",
       "metadata": {
         "description": "Name for the Virtual Machine."
       }
@@ -61,9 +61,9 @@
     "vmSize": {
       "type": "string",
       "allowedValues": [
-        "Standard_DS4_v2",
         "Standard_DS2_v2",
-        "Standard_DS3_v2"
+        "Standard_DS3_v2",
+        "Standard_DS4_v2"
       ],
       "metadata": {
         "description": "Size of the Virtual Machine."
@@ -97,7 +97,7 @@
       }
     },
     "virtualNetworkAddressPrefix": {
-      "type": "array",
+      "type": "string",
       "defaultValue": "10.0.0.0/16",
       "metadata": {
         "description": "Virtual Network Address prefix"
